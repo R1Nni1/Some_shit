@@ -13,9 +13,10 @@ def echo_all(message):
 		bot.send_message(message.chat.id, str(now.strftime("%H:%M:%S")), reply_markup=keypool)
 	if message.text.lower()	=="пока":
 		bot.send_message(message.chat.id, "Удачи !", reply_markup=keypool)
-		bot.stop_bot()
 	if message.text.lower()	=="какой день недели ?":
 		bot.send_message(message.chat.id, str(datetime.datetime.now().strftime("%A")), reply_markup=keypool)
+	if message.text.lower()=="хочу мем !":
+		bot.send_video()
 keypool=telebot.types.ReplyKeyboardMarkup(True)
 keypool.row("Привет", "Пока", "Сколько времени ?", "Какой день недели ?")
 bot.polling()
