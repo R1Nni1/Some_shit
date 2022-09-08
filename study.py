@@ -2,12 +2,10 @@ import datetime
 import telebot
 from pyowm import *
 from pyowm.utils.config import get_default_config
-
 bot=telebot.TeleBot('5292414027:AAEKWvN6Ce7SniuB4vDvtnKksHwccOBGPZ8')
-
 keypool=telebot.types.ReplyKeyboardMarkup(True)
 keypool.row("Привет", "Пока", "Сколько времени ?", "Какой день недели ?","Погода")
-@bot.message_handler(command=['start', 'help'],reply_markup=keypool)
+@bot.message_handler(command=['start'],reply_markup=keypool)
 def send_welcome(message):
 	bot.reply_to(message, "Howdy, how are you doing?")
 language = get_default_config()
@@ -28,6 +26,7 @@ def echo_all(message):
 		bot.send_message(message.chat.id, str(datetime.datetime.now().strftime("%A")), reply_markup=keypool)
 	if message.text.lower()=="погода":
 		weather_is=True
+		bot.send_message(message.chat.id, "Введите место где вы хотите узнать погоду")
 	if weather_is==True and message.text.lower()!="погода":
 		try:
 			weather_place=owm.weather_manager().weather_at_place(str(message.text)).weather
