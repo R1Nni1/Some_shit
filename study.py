@@ -6,7 +6,8 @@ from pyowm.utils.config import get_default_config
 bot=telebot.TeleBot('5292414027:AAEKWvN6Ce7SniuB4vDvtnKksHwccOBGPZ8')
 
 keypool=telebot.types.ReplyKeyboardMarkup(True)
-keypool.row("Привет", "Пока", "Сколько времени ?", "Какой день недели ?","Погода")
+keypool.row("Привет", "Пока", "Сколько времени ?")
+keypool.row("Какой день недели ?","Погода")
 @bot.message_handler(command=['start', 'help'],reply_markup=keypool)
 def send_welcome(message):
 	bot.reply_to(message, "Howdy, how are you doing?")
