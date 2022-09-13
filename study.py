@@ -4,11 +4,11 @@ from pyowm import *
 from pyowm.utils.config import get_default_config
 bot=telebot.TeleBot('5292414027:AAEKWvN6Ce7SniuB4vDvtnKksHwccOBGPZ8')
 keypool=telebot.types.ReplyKeyboardMarkup(True)
-keypool.row("Привет", "Пока", "Сколько времени ?")
-keypool.row("Какой день недели ?","Погода")
-@bot.message_handler(command=['start'],reply_markup=keypool)
+keypool.row("Привет")
+keypool.row("Погода")
+@bot.message_handler(command=['start'])
 def send_welcome(message):
-	bot.reply_to(message, "Howdy, how are you doing?")
+	bot.send_message(message.chat.id,"Привет !",reply_markup=keypool)
 language = get_default_config()
 language['language'] = 'ru'
 owm=OWM("3733bcd746dd112dc083e7c19c2ddcbc",language)
@@ -17,17 +17,10 @@ weather_is=False
 def echo_all(message):
 	global weather_is
 	if message.text.lower()	=="привет":
-		bot.send_message(message.chat.id, "Тебе тоже", reply_markup=keypool)
-	if message.text.lower()	=="сколько времени ?":
-		now =datetime.datetime.now()
-		bot.send_message(message.chat.id, str(now.strftime("%H:%M:%S")), reply_markup=keypool)
-	if message.text.lower()	=="пока":
-		bot.send_message(message.chat.id, "Удачи !", reply_markup=keypool)
-	if message.text.lower()	=="какой день недели ?":
-		bot.send_message(message.chat.id, str(datetime.datetime.now().strftime("%A")), reply_markup=keypool)
+		bot.send_message(message.chat.id, "Привет", reply_markup=keypool)
 	if message.text.lower()=="погода":
 		weather_is=True
-		bot.send_message(message.chat.id, "Введите место где вы хотите узнать погоду")
+		bot.send_message(message.chat.id, "Введите место, где вы хотите узнать погоду")
 	if weather_is==True and message.text.lower()!="погода":
 		try:
 			weather_place=owm.weather_manager().weather_at_place(str(message.text)).weather
